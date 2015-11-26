@@ -27,6 +27,15 @@ use Digitick\Sepa\TransferFile\TransferFileInterface;
 
 class DomBuilderFactory
 {
+
+    /**
+     * @param TransferFileInterface $transferFile
+     * @param string                $painFormat
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return CustomerCreditTransferDomBuilder|CustomerDirectDebitTransferDomBuilder
+     */
     public static function createDomBuilder(TransferFileInterface $transferFile, $painFormat = '')
     {
         $transferFileClass = get_class($transferFile);

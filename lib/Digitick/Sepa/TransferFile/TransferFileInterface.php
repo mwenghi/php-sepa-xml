@@ -23,9 +23,16 @@ namespace Digitick\Sepa\TransferFile;
 
 use Digitick\Sepa\DomBuilder\DomBuilderInterface;
 use Digitick\Sepa\GroupHeader;
+use Digitick\Sepa\PaymentInformation;
 
 interface TransferFileInterface
 {
+
+    /**
+     * TransferFileInterface constructor
+     *
+     * @param GroupHeader $groupHeader
+     */
     public function __construct(GroupHeader $groupHeader);
 
     /**
@@ -39,5 +46,14 @@ interface TransferFileInterface
      */
     public function validate();
 
+    /**
+     * @param DomBuilderInterface $domBuilder
+     */
     public function accept(DomBuilderInterface $domBuilder);
+
+    /**
+     * @param PaymentInformation $payment
+     */
+    public function addPaymentInformation(PaymentInformation $payment);
+
 }

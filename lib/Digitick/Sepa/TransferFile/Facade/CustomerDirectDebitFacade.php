@@ -28,9 +28,10 @@ use Digitick\Sepa\TransferInformation\CustomerDirectDebitTransferInformation;
 
 class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
 {
+
     /**
-     * @param $paymentName
-     * @param array $paymentInformation
+     * @param string $paymentName
+     * @param array  $paymentInformation
      *     - id
      *     - creditorName
      *     - creditorAccountIBAN
@@ -40,8 +41,8 @@ class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
      *     - [dueDate] if not set: now + 5 days
      *
      * @throws \Digitick\Sepa\Exception\InvalidArgumentException
-     * @return mixed
      *
+     * @return PaymentInformation
      */
     public function addPaymentInfo($paymentName, array $paymentInformation)
     {
@@ -70,11 +71,13 @@ class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
         }
 
         $this->payments[$paymentName] = $payment;
+
+        return $payment;
     }
 
     /**
-     * @param $paymentName
-     * @param array $transferInformation
+     * @param string $paymentName
+     * @param array  $transferInformation
      *      - amount
      *      - debtorIban
      *      - debtorBic
@@ -85,7 +88,8 @@ class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
      *      - [endToEndId]
      *
      * @throws \Digitick\Sepa\Exception\InvalidArgumentException
-     * @return mixed
+     *
+     * @return CustomerDirectDebitTransferInformation
      */
     public function addTransfer($paymentName, array $transferInformation)
     {
@@ -95,6 +99,7 @@ class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
                 $paymentName
             ));
         }
+
         $transfer = new CustomerDirectDebitTransferInformation(
             $transferInformation['amount'],
             $transferInformation['debtorIban'],
@@ -102,6 +107,7 @@ class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
         );
         $transfer->setBic($transferInformation['debtorBic']);
         $transfer->setMandateId($transferInformation['debtorMandate']);
+
         if ($transferInformation['debtorMandateSignDate'] instanceof \DateTime) {
             $transfer->setMandateSignDate($transferInformation['debtorMandateSignDate']);
         } else {
@@ -117,5 +123,7 @@ class CustomerDirectDebitFacade extends BaseCustomerTransferFileFacade
         }
 
         $this->payments[$paymentName]->addTransfer($transfer);
+
+        return $transfer;
     }
 }

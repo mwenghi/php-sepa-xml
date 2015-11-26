@@ -95,6 +95,10 @@ abstract class BaseDomBuilder implements DomBuilderInterface
 
     /**
      * Format an integer as a monetary value.
+     *
+     * @param int $amount
+     *
+     * @return string
      */
     protected function intToCurrency($amount)
     {

@@ -35,7 +35,7 @@ abstract class BaseTransferFile implements TransferFileInterface
     protected $groupHeader;
 
     /**
-     * @var array<PaymentInformation>
+     * @var array|PaymentInformation[]
      */
     protected $paymentInformations;
 
@@ -60,8 +60,8 @@ abstract class BaseTransferFile implements TransferFileInterface
      */
     public function addPaymentInformation(PaymentInformation $paymentInformation)
     {
-        $numberOfTransactions = $this->getGroupHeader()->getNumberOfTransactions(
-            ) + $paymentInformation->getNumberOfTransactions();
+        $groupTransactions = $this->getGroupHeader()->getNumberOfTransactions();
+        $numberOfTransactions = $groupTransactions + $paymentInformation->getNumberOfTransactions();
         $transactionTotal = $this->getGroupHeader()->getControlSumCents() + $paymentInformation->getControlSumCents();
         $this->groupHeader->setNumberOfTransactions($numberOfTransactions);
         $this->groupHeader->setControlSumCents($transactionTotal);

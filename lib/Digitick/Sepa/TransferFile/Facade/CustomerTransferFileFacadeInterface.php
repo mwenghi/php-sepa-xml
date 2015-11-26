@@ -22,21 +22,25 @@
 
 namespace Digitick\Sepa\TransferFile\Facade;
 
+use Digitick\Sepa\PaymentInformation;
+use Digitick\Sepa\TransferInformation\CustomerCreditTransferInformation;
+use Digitick\Sepa\TransferInformation\CustomerDirectDebitTransferInformation;
+
 interface CustomerTransferFileFacadeInterface
 {
     /**
-     * @param $payment
-     * @param array $paymentInformation
+     * @param string $payment
+     * @param array  $paymentInformation
      *
-     * @return mixed
+     * @return PaymentInformation
      */
     public function addPaymentInfo($payment, array $paymentInformation);
 
     /**
-     * @param $payment
-     * @param array $transferInformation
+     * @param string $payment
+     * @param array  $transferInformation
      *
-     * @return mixed
+     * @return CustomerDirectDebitTransferInformation|CustomerCreditTransferInformation
      */
     public function addTransfer($payment, array $transferInformation);
 
