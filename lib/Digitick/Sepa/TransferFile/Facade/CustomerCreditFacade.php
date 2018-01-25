@@ -82,6 +82,10 @@ class CustomerCreditFacade extends BaseCustomerTransferFileFacade
 
         $this->payments[$paymentName]->addTransfer($transfer);
 
+        if (isset($transferInformation['instructionId'])) {
+            $transfer->setInstructionId($transferInformation['instructionId']);
+        }
+        
         return $transfer;
     }
 
